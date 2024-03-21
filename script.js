@@ -1,24 +1,19 @@
-// Randomly returns either 'rock', 'paper', 'scissors'
 function getComputerChoice() {
-    // Array holding all possible computer choices
-    const choices = ['rock', 'paper', 'scissors'];
+    const computerChoices = ['rock', 'paper', 'scissors'];
     // Math.random() gets random number between(0-1, 1 exclusive)
     // The number from Math.random() is multiplied by the array length to get the numbers between(0-3)
     // Math.floor() gets the index ranging from(0 to arrayLength-1)
-    let rand = choices[(Math.floor(Math.random() * choices.length))];
-    return rand;
+    let randomChoice = computerChoices[(Math.floor(Math.random() * computerChoices.length))];
+    return randomChoice;
 }
 
-// Displays a simple table after every round
-function scoreTable(playerPoints, computerPoints) {
+function displayScoreTable(playerPoints, computerPoints) {
     return console.log(`||Player: ${playerPoints}||\t\t||Computer: ${computerPoints}||`);
 }
 
 function playGame() {
     function playRound(playerSelection, computerSelection) {
-        // A switch statement is used to provide unique string based on round result
         switch(playerSelection) {
-            // Runs if player inputs 'rock'
             case 'rock':
                 if (computerSelection === 'rock') {
                     console.log("Rock vs Rock. It's a tie!");
@@ -31,10 +26,8 @@ function playGame() {
                     console.log("Rock vs Scissors. You win! Woohoo!");
                     playerPoints++;
                 }
-                //Display score table
-                scoreTable(playerPoints, computerPoints);
+                displayScoreTable(playerPoints, computerPoints);
                 break;
-            // Runs if player inputs 'paper'
             case 'paper':
                 if (computerSelection === 'rock') {
                     console.log("Paper vs Rock. Your a winner! Yay!");
@@ -47,10 +40,8 @@ function playGame() {
                     console.log("Paper vs Scissors. You lose! Bettter luck next time!");
                     computerPoints++;
                 }
-                // Display score table
-                scoreTable(playerPoints, computerPoints);
+                displayScoreTable(playerPoints, computerPoints);
                 break;
-            // Runs if player inputs 'scissors'
             case 'scissors':
                 if (computerSelection === 'rock') {
                     console.log("Scissors vs Rock. Oh no, you lose! Don't give up!");
@@ -63,8 +54,7 @@ function playGame() {
                     playerPoints++;
                     computerPoints++;
                 }
-                //Display score table
-                scoreTable(playerPoints, computerPoints);
+                displayScoreTable(playerPoints, computerPoints);
                 break;
         }
     }
@@ -114,8 +104,4 @@ function playGame() {
     }
 }
 
-// Greeting for each new game
-console.log("Welcome to Rock, Paper, Scissors! \n\n");
-
-// Calls main function
 playGame();

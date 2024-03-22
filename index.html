@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Function scope example</title>
+    <title>Rock, Paper, Scissors Game</title>
     <style>
       .button {
         border: none;
@@ -17,7 +17,12 @@
         font-size: 16px;
         margin: 4px 2px;
         cursor: pointer;
-      }  
+      }
+      
+      button:disabled {
+        background: #F5F5F5;
+        color : #C3C3C3;
+      }
     </style>
   </head>
 <body>
@@ -28,6 +33,8 @@
   <button class="button" name="Rock">Rock</button>
   <button class="button" name="Paper">Paper</button>
   <button class="button" name="Scissors">Scissors</button>
+
+  <div id="container"></div>
 
   <script src="script.js"></script>
 </body>

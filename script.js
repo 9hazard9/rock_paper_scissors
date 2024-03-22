@@ -8,53 +8,53 @@ function getComputerChoice() {
 }
 
 function displayScoreTable(playerPoints, computerPoints) {
-    return console.log(`\n||Player: ${playerPoints}||\t\t||Computer: ${computerPoints}||\n`);
+    return `\n||Player: ${playerPoints}||\t\t||Computer: ${computerPoints}||\n`;
+}
+
+function disableButtons() {
+    document.querySelectorAll('.button').forEach(button => button.setAttribute('disabled', true));
 }
 
 function playGame() {
     function playRound(playerSelection, computerSelection) {
-        switch(playerSelection) {
-            case 'Rock':
-                if (computerSelection === 'Rock') {
-                    console.log("Rock vs Rock. It's a tie!");
-                } else if (computerSelection === 'Paper') {
-                    console.log("Rock vs Paper. Sorry, you lose!");
-                    computerPoints++;
-                } else {
-                    console.log("Rock vs Scissors. You win! Woohoo!");
-                    playerPoints++;
-                }
-                displayScoreTable(playerPoints, computerPoints);
-                break;
-            case 'Paper':
-                if (computerSelection === 'Rock') {
-                    console.log("Paper vs Rock. Your a winner! Yay!");
-                    playerPoints++;
-                } else if (computerSelection === 'Paper') {
-                    console.log("Paper vs Paper. It's a tie!");
-                    playerPoints++;
-                } else {
-                    console.log("Paper vs Scissors. You lose! Bettter luck next time!");
-                    computerPoints++;
-                }
-                displayScoreTable(playerPoints, computerPoints);
-                break;
-            case 'Scissors':
-                if (computerSelection === 'Rock') {
-                    console.log("Scissors vs Rock. Oh no, you lose! Don't give up!");
-                    computerPoints++;
-                } else if(computerSelection === 'Paper') {
-                    console.log("Scissors vs Paper. Congratulations, you win!");
-                    playerPoints++;
-                } else {
-                    console.log("Scissors vs Scissors. It's a tie");
-                    playerPoints++;
-                    computerPoints++;
-                }
-                displayScoreTable(playerPoints, computerPoints);
-                break;
+        let roundResult = "";
+
+        if ((playerSelection === 'Rock') && (computerSelection === 'Rock')) {
+            roundResult = "Rock vs Rock. It's a tie!\n";
+            return roundResult;
+        } else if ((playerSelection === 'Rock') && (computerSelection === 'Paper')) {
+            computerPoints++;
+            roundResult = "Rock vs Paper. Sorry, you lose!\n";
+            return roundResult;
+        } else if((playerSelection === 'Rock') && (computerSelection === 'Scissors')){
+            playerPoints++;
+            roundResult = "Rock vs Scissors. You win! Woohoo!\n";
+            return roundResult;
+        } else if ((playerSelection === 'Paper') && (computerSelection === 'Rock')) {
+            playerPoints++;
+            roundResult = "Paper vs Rock. Your a winner! Yay!\n";
+            return roundResult;
+        } else if ((playerSelection === 'Paper') && (computerSelection === 'Paper')) {
+            roundResult = "Paper vs Paper. It's a tie!\n";
+            return roundResult;
+        } else  if((playerSelection === 'Paper') && (computerSelection === 'Scissors')){
+            computerPoints++;
+            roundResult = "Paper vs Scissors. You lose! Bettter luck next time!\n";
+            return roundResult;
+        } else if((playerSelection === 'Scissors') && (computerSelection === 'Rock')) {
+            computerPoints++;
+            roundResult = "Scissors vs Rock. Oh no, you lose! Don't give up!\n";
+            return roundResult;
+        } else if((playerSelection === 'Scissors') && (computerSelection === 'Paper')) {
+            playerPoints++;
+            roundResult = "Scissors vs Paper. Congratulations, you win!\n";
+            return roundResult;
+        } else {
+            roundResult = "Scissors vs Scissors. It's a tie.\n";
+            return roundResult;
         }
     }
+
 
     let playerPoints = 0;
     let computerPoints = 0;
@@ -63,7 +63,25 @@ function playGame() {
 
     allButtons.forEach(button => {
         button.addEventListener("click", (event) => {
-            playRound(event.target.name, getComputerChoice());
+            const container = document.querySelector("#container");
+            const table = document.createElement("p");
+            const result = document.createElement("p");
+
+            result.textContent = playRound(event.target.name, getComputerChoice());
+            container.appendChild(result);
+
+            table.textContent = displayScoreTable(playerPoints, computerPoints);
+            container.appendChild(table);
+
+            if (playerPoints === 5) {
+                disableButtons();
+                result.textContent = "\nYou are the winner!!!";
+                container.appendChild(result);
+            } else if(computerPoints === 5) {
+                disableButtons();
+                result.textContent = "\nSorry, the computer wins. Try Again!";
+                container.appendChild(result);
+            }
         })
     });
 }
